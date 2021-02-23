@@ -9,8 +9,10 @@
 ``docker-compose build``
 4) Install dependencies: <br/>
 ``docker-compose run rmit-php-fpm composer install``
+5) Apply migrations: <br/>
+``docker-compose run rmit-php-fpm php bin/console doctrine:migrations:migrate``
 5) Load fixtures: <br/>
-``docker-compose run rmit-php-fpm bin/console doctrine:fixtures:load``
+``docker-compose run rmit-php-fpm php bin/console doctrine:fixtures:load``
 6) Finally start all services: <br/>
 ``docker-compose up``
 7) Finally you can see results by opening url: <br/>
