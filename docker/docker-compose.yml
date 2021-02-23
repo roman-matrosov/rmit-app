@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+    rmit-db:
+        container_name: rmit-db
+        image: mysql:8.0.22
+        command: ["--default-authentication-plugin=mysql_native_password"]
+        ports:
+            - "3315:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: app
+            MYSQL_USER: app
+            MYSQL_PASSWORD: app
+
+    rmit-php-fpm:
+        container_name: rmit-php-fpm
+        build:
+            context: ./php-fpm
+        ports:
+            - "9019:9001"
+        volumes:
+            - ./../:/home/app:cached
+            - ./logs/php:/home/app/var/log:cached
+        depends_on: 
+            - rmit-db
+            - rmit-elasticsearch
+
+    rmit-nginx:
+        container_name: rmit-nginx
+        build: ./nginx
+        ports:
+            - "815:80"
+        depends_on: 
+            - rmit-php-fpm
+            - rmit-elasticsearch
+        volumes:
+            - ./logs/nginx:/var/log/nginx:cached
+            - ./../:/home/app:cached
+
+    rmit-elasticsearch:
+        container_name: rmit-elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+        environment:
+            discovery.type: "single-node"
+        ports:
+            - "9215:9200"

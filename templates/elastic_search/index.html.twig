@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm table-responsive2">
+            <h4>Search in Applications (out AppServices)</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>AppCode</td>
+                        <td>ServiceCode</td>
+                        <td>Name</td>
+                        <td>Type</td>
+                        <td>SubType</td>
+                        <td>Description</td>
+                        <td>LastModified</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _app in apps %}
+                        {% for _appService in _app.appServices %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('application_show', { 'id' : _appService.appCode }) }}">
+                                        {{ _appService.appCode }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_service_show', { 'id' : _appService.serviceCode }) }}">
+                                        {{ _appService.serviceCode }}
+                                    </a>
+                                </td>
+                                <td>{{ _appService.name }}</td>
+                                <td>{{ _appService.type }}</td>
+                                <td>{{ _appService.subType }}</td>
+                                <td>{{ _appService.description }}</td>
+                                <td>{{ _appService.lastModified|date('d.m.Y H:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm">
+            <h4>Search in AppServices (out Applications)</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>ServiceCode</td>
+                    <td>AppCode</td>
+                    <td>Name</td>
+                    <td>AppGroup</td>
+                    <td>AppType</td>
+                    <td>Description</td>
+                    <td>AppCost</td>
+                    <td>LastModified</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for _appService in appServices %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('app_service_show', { 'id' : _appService.serviceCode }) }}">
+                                {{ _appService.serviceCode }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('application_show', { 'id' : _appService.application.appCode }) }}">
+                                {{  _appService.application.appCode }}
+                            </a>
+                        </td>
+                        <td>{{  _appService.application.name }}</td>
+                        <td>{{  _appService.application.appGroup }}</td>
+                        <td>{{  _appService.application.appType }}</td>
+                        <td>{{  _appService.application.description }}</td>
+                        <td>{{  _appService.application.lastModified|date('d.m.Y H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

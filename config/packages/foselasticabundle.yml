@@ -1,0 +1,28 @@
+fos_elastica:
+  clientssss:
+    default: { host: elasticsearch, port: 9201 }
+  i1ndexesss:
+    app:
+      finder: ~
+    application:
+      mappings:
+        name: ~
+      persistence:
+        # the driver can be orm, mongodb or phpcr
+        driver: orm
+        model: App\Entity\Application
+        provider: ~
+        finder: ~
+#      properties:
+#        name: ~
+    app_service:
+      mappings:
+        name: ~
+      persistence:
+        # the driver can be orm, mongodb or phpcr
+        driver: orm
+        model: App\Entity\AppService
+        provider: ~
+        finder: ~
+#      properties:
+#        name: ~
